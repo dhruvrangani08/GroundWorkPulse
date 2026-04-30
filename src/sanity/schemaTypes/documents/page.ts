@@ -5,6 +5,9 @@ import { howItWorks } from '../components/howItWorks'
 import product from '../components/product'
 import conditions from '../components/conditions'
 import brief from '../components/brief'
+import { vsTable } from '../components/vsTable'
+import { pricing } from '../components/pricing'
+import { finalCTA } from '../components/finalCTA'
 
 // Add every section type here - mirrors components/index.ts
 const pageSections = [
@@ -13,7 +16,10 @@ const pageSections = [
     howItWorks,
     product,
     conditions,
-    brief
+    brief,
+    vsTable,
+    pricing,
+    finalCTA
 ]
 
 export const page = defineType({

@@ -8,6 +8,9 @@ import { HowItWorksSection } from "../components/sections/HowItWorksSection";
 import { ProductSection } from "../components/sections/ProductSection";
 import { ConditionsSection } from "../components/sections/ConditionsSection";
 import { BriefSection } from "../components/sections/BriefSection";
+import { VSTableSection } from "../components/sections/VSTableSection";
+import { PricingSection } from "../components/sections/PricingSection";
+import { FinalCTASection } from "../components/sections/FinalCTASection";
 
 // Fetch page data using Danny project pattern
 const homePage = await client.fetch(HOME_QUERY);
@@ -95,6 +98,48 @@ const homePage = await client.fetch(HOME_QUERY);
         documentSubtitle={section.documentSubtitle || ""}
         briefBlocks={section.briefBlocks || []}
         stampText={section.stampText || ""}
+      />
+    );
+  }
+  
+  // VS Table Section Fragment
+  if (section._type === "vsTable") {
+    return (
+      <VSTableSection 
+        client:load
+        title={section.title || ""}
+        eyebrow={section.eyebrow || ""}
+        competitorHeader={section.competitorHeader || ""}
+        groundworkHeader={section.groundworkHeader || ""}
+        tableRows={section.tableRows || []}
+      />
+    );
+  }
+  
+  // Pricing Section Fragment
+  if (section._type === "pricing") {
+    return (
+      <PricingSection 
+        client:load
+        eyebrow={section.eyebrow || ""}
+        title={section.title || ""}
+        pricingFlag={section.pricingFlag || ""}
+        plans={section.plans || []}
+      />
+    );
+  }
+  
+  // Final CTA Section Fragment
+  if (section._type === "finalCTA") {
+    return (
+      <FinalCTASection 
+        client:load
+        eyebrow={section.eyebrow || ""}
+        title={section.title || ""}
+        subtitle={section.subtitle || ""}
+        ctaText={section.ctaText || ""}
+        ctaLink={section.ctaLink || ""}
+        footerText={section.footerText || ""}
       />
     );
   }
