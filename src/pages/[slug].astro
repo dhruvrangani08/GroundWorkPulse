@@ -1,0 +1,32 @@
+---
+import MainLayout from "../layouts/main.astro";
+import { client } from "../sanity/client";
+import { PAGE_QUERY } from "../sanity/queries/pageQueries";
+
+export async function getStaticPaths() {
+  const pages = await client.fetch(`*[_type == "page"]{slug, title}`);
+  
+  return pages.map((page: any) => ({
+    params: { slug: page.slug.current },
+    props: { page }
+  }));
+}
+
+const { slug } = Astro.params;
+const pageData = await client.fetch(PAGE_QUERY, { slug });
+
+if (!pageData) {
+  return Astro.redirect('/404');
+}
+
+const { page } = pageData;
+---
+
+<MainLayout
+  title={page.metaSections?.[0]?.metaTitle || page.title}
+  description={page.metaSections?.[0]?.metaDescription}
+>
+  {page.sections?.map((section: any) => {
+    
+  })}
+</MainLayout>

@@ -1,0 +1,88 @@
+---
+import "../styles/global.css";
+import Footer from "../components/organism/Footer.tsx";
+import Header from "../components/organism/Header.tsx";
+import BaseHead from "./BaseHead.astro";
+import { client } from "../sanity/client";
+import { LAYOUT_QUERY } from "../sanity/queries/pageQueries";
+import type {
+  FooterSection,
+  HeaderSection,
+} from "../sanity/types/sanity.types";
+
+const data = await client.fetch<{
+  header: HeaderSection;
+  footer: FooterSection;
+}>(LAYOUT_QUERY);
+
+const footer = data?.footer;
+
+const { title, description, image, isFooter = true, pageData } = Astro.props;
+
+// Use pageData values as fallbacks
+const finalTitle = title || pageData?.title || "GroundWork Pulse";
+const finalDescription = description || pageData?.description;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={finalTitle} description={finalDescription} image={image} />
+    {
+      /* Preload critical images for better performance */
+      Astro?.props?.preloadImages?.map((src: any, index: number) => (
+        <link
+          rel="preload"
+          as="image"
+          href={src}
+          fetchpriority={index === 0 ? "high" : undefined}
+        />
+      ))
+    }
+    {
+      Astro?.props?.preloadImagesMobile?.map((src: any, index: number) => (
+        <link
+          rel="preload"
+          as="image"
+          href={src}
+          fetchpriority={index === 0 ? "high" : undefined}
+        />
+      ))
+    }
+  </head>
+  <body>
+    {
+      data.header && (
+        <Header
+          client:load
+          logoHref={"/"}
+          logoText={data.header?.logoText}
+          tagline={data.header?.tagline}
+          navItems={data.header?.menuItems?.map((item) => ({
+            label: item.title,
+            href: item.link,
+          }))}
+          ctaLabel={data.header?.ctaButton?.text}
+          ctaHref={data.header?.ctaButton?.link}
+          currentPath={Astro.url.pathname}
+        />
+      )
+    }
+    <main>
+      <slot />
+    </main>
+    {
+      isFooter && footer && (
+        <Footer
+          client:load
+          logoText={footer.logoText}
+          logoTagline={footer.logoTagline}
+          columns={footer.columns}
+          copyright={footer.copyright}
+          bottomTagline={footer.bottomTagline}
+        />
+      )
+    }
+  </body>
+  
+  <script src="../scripts/main.js" />
+</html>

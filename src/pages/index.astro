@@ -1,0 +1,126 @@
+---
+import MainLayout from "../layouts/main.astro";
+import { client } from "../sanity/client";
+import { HOME_QUERY } from "../sanity/queries/pageQueries";
+import HeroSection from "../components/organism/HeroSection";
+import { CredibilityLineSection } from "../components/sections/CredibilityLineSection";
+import { HowItWorksSection } from "../components/sections/HowItWorksSection";
+import { ProductSection } from "../components/sections/ProductSection";
+import { ConditionsSection } from "../components/sections/ConditionsSection";
+import { BriefSection } from "../components/sections/BriefSection";
+
+// Fetch page data using Danny project pattern
+const homePage = await client.fetch(HOME_QUERY);
+
+---
+<MainLayout
+  title={homePage?.metaSections?.[0]?.metaTitle || "GroundWork Pulse"}
+  description={homePage?.metaSections?.[0]?.metaDescription || "Team Conditions. Clearly Measured."}
+>
+
+{/* Dynamic sections from Sanity - Danny Project Pattern */}
+{homePage?.sections?.map((section: any, index: number) => {
+  
+  // Hero Section Fragment
+  if (section._type === "hero") {
+    return (
+      <HeroSection 
+        client:load
+        title={section.title || []}
+        italicLastWord={section.italicLastWord ?? true}
+        subtitle={section.subtitle || ""}
+        ctaPrimary={section.ctaPrimary}
+        ctaSecondary={section.ctaSecondary}
+        shelfItems={section.shelfItems || []}
+      />
+    );
+  }
+  
+  // Credibility Line Section Fragment
+  if (section._type === "credibilityLine") {
+    return (
+      <CredibilityLineSection 
+        text={section.text || ""}
+        researchLink={section.researchLink || undefined}
+      />
+    );
+  }
+  
+  // How It Works Section Fragment
+  if (section._type === "howItWorks") {
+    return (
+      <HowItWorksSection 
+        title={section.title || ""}
+        eyebrowText={section.eyebrowText || ""}
+        subtitle={section.subtitle || ""}
+        steps={section.steps || []}
+      />
+    );
+  }
+  
+  // Product Section Fragment
+  if (section._type === "product") {
+    return (
+      <ProductSection 
+        title={section.title || ""}
+        eyebrowText={section.eyebrowText || ""}
+        subtitle={section.subtitle || ""}
+      />
+    );
+  }
+  
+  // Conditions Section Fragment
+  if (section._type === "conditions") {
+    return (
+      <ConditionsSection 
+        title={section.title || ""}
+        eyebrowText={section.eyebrowText || ""}
+        subtitle={section.subtitle || ""}
+        pillars={section.pillars || []}
+        conditions={section.conditions || []}
+      />
+    );
+  }
+  
+  // Brief Section Fragment
+  if (section._type === "brief") {
+    return (
+      <BriefSection 
+        title={section.title || ""}
+        eyebrowText={section.eyebrowText || ""}
+        description={section.description || ""}
+        additionalText={section.additionalText || ""}
+        disclaimer={section.disclaimer || ""}
+        documentTitle={section.documentTitle || ""}
+        documentSubtitle={section.documentSubtitle || ""}
+        briefBlocks={section.briefBlocks || []}
+        stampText={section.stampText || ""}
+      />
+    );
+  }
+  
+  // Legacy Hero Section (backward compatibility)
+  if (section._type === "heroSection") {
+    return (
+      <HeroSection 
+        client:load
+        title={section.headingLine ? [section.headingLine] : []}
+        subtitle={section.subHeadingLine || ""}
+        ctaPrimary={{
+          label: section.buttonText || "",
+          href: section.buttonLink || "#"
+        }}
+        shelfItems={[]}
+      />
+    );
+  }
+  
+  // Fallback for unknown sections
+  return (
+    <div class="p-4 border border-red-500 rounded">
+      <p>Unknown section type: {section._type}</p>
+      <pre>{JSON.stringify(section, null, 2)}</pre>
+    </div>
+  );
+})}
+</MainLayout>

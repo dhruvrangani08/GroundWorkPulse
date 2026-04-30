@@ -1,0 +1,11 @@
+export { header } from './header';
+export { footer } from './footer';
+export { hero } from './hero';
+export { credibilityLine } from './credibilityLine';
+export { howItWorks } from './howItWorks';
+import product from './product';
+export { product };
+import conditions from './conditions';
+export { conditions };
+import brief from './brief';
+export { brief };
