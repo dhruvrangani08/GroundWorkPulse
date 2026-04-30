@@ -63,8 +63,6 @@ const Header: React.FC<HeaderProps> = ({
           zIndex: 9999,
           padding: '32px 24px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-          transform: isMenuOpen ? 'translateY(0)' : 'translateY(-110%)',
-          opacity: isMenuOpen ? 1 : 0,
           clipPath: isMenuOpen ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)',
           pointerEvents: isMenuOpen ? 'all' : 'none',
           transition: 'clip-path 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
