@@ -1,4 +1,6 @@
 import React from 'react';
+import { toHTML } from '@portabletext/to-html';
+import type { TypedObject } from '@portabletext/types';
 
 interface PlanFeature {
   text: string;
@@ -6,7 +8,7 @@ interface PlanFeature {
 
 interface Plan {
   planType: string;
-  planName: string;
+  planName: string | TypedObject[];
   planTag: string;
   priceNumber: string;
   pricePer: string;
@@ -122,7 +124,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   <div className="plan-type">{plan.planType}</div>
                   <h3 
                     className="plan-name"
-                    dangerouslySetInnerHTML={{ __html: plan.planName }}
+                    dangerouslySetInnerHTML={{ 
+                      __html: typeof plan.planName === 'string' ? plan.planName : toHTML(plan.planName) 
+                    }}
                   />
                   <p className="plan-tag">{plan.planTag}</p>
                 </div>

@@ -44,7 +44,20 @@ export const pricing = defineType({
             defineField({
               name: 'planName',
               title: 'Plan Name',
-              type: 'string',
+              type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  styles: [],
+                  lists: [],
+                  marks: {
+                    decorators: [
+                      { title: 'Strong', value: 'strong' },
+                      { title: 'Emphasis', value: 'em' }
+                    ]
+                  }
+                }
+              ],
               validation: Rule => Rule.required(),
             }),
             defineField({
@@ -156,11 +169,14 @@ export const pricing = defineType({
               planType: 'planType',
               priceNumber: 'priceNumber',
               isMostPopular: 'isMostPopular',
+              title: 'title',  // Added missing title field
             },
             prepare(selection) {
-              const { planName, planType, priceNumber, isMostPopular } = selection;
+              const { planName, planType, priceNumber, isMostPopular, title } = selection;
+              const planNameText = planName && typeof planName === 'string' ? planName : 
+                planName.map((t: any) => typeof t === 'string' ? t : t._type === 'block' ? t.children?.map((c: any) => c.text).join('') || '' : '').join(' ');
               return {
-                title: planName,
+                title: planNameText,
                 subtitle: `${planType} - $${priceNumber} ${isMostPopular ? '(Popular)' : ''}`,
               };
             },
@@ -177,6 +193,8 @@ export const pricing = defineType({
     },
     prepare(selection) {
       const { title, eyebrow } = selection;
+      const titleText = title && typeof title === 'string' ? title : 
+        title.map((t: any) => typeof t === 'string' ? t : t._type === 'block' ? t.children?.map((c: any) => c.text).join('') || '' : '').join(' ');
       return {
         title: 'Pricing Section',
         subtitle: eyebrow || 'Pricing plans',
