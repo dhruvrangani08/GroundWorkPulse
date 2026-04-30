@@ -29,7 +29,7 @@ const homePage = await client.fetch(HOME_QUERY);
     return (
       <HeroSection 
         client:load
-        title={section.title || []}
+        titleLines={section.titleLines || []}
         italicLastWord={section.italicLastWord ?? true}
         subtitle={section.subtitle || ""}
         ctaPrimary={section.ctaPrimary}
@@ -149,7 +149,7 @@ const homePage = await client.fetch(HOME_QUERY);
     return (
       <HeroSection 
         client:load
-        title={section.headingLine ? [section.headingLine] : []}
+        titleLines={section.headingLine ? [{ text: section.headingLine }] : []}
         subtitle={section.subHeadingLine || ""}
         ctaPrimary={{
           label: section.buttonText || "",

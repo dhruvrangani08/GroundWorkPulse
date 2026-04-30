@@ -6,11 +6,50 @@ export const hero = defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Hero Title',
+      name: 'titleLines',
+      title: 'Title Lines',
       type: 'array',
-      of: [{ type: 'string' }],
-      description: 'Array of title lines (e.g., ["Make high", "performance", "inevitable."])'
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'text',
+              title: 'Line Text',
+              type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  styles: [],
+                  lists: [],
+                  marks: {
+                    decorators: [
+                      { title: 'Strong', value: 'strong' },
+                      { title: 'Emphasis', value: 'em' }
+                    ]
+                  }
+                }
+              ],
+              description: 'Title line text with HTML support (supports strong and em tags)'
+            })
+          ],
+          preview: {
+            select: {
+              text: 'text'
+            },
+            prepare(selection) {
+              const { text } = selection;
+              const plainText = Array.isArray(text) ?
+                text.map(t => typeof t === 'string' ? t : t._type === 'block' ? t.children?.map((c: any) => c.text).join('') || '' : '').join(' ') :
+                text || '';
+              return {
+                title: plainText || 'Title Line'
+              };
+            }
+          }
+        }
+      ],
+      description: 'Array of title lines (add/remove as needed)'
     }),
     defineField({
       name: 'italicLastWord',
@@ -22,8 +61,21 @@ export const hero = defineType({
     defineField({
       name: 'subtitle',
       title: 'Hero Subtitle',
-      type: 'text',
-      description: 'Main description text below the title'
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' }
+            ]
+          }
+        }
+      ],
+      description: 'Sub title with HTML support (supports strong and em tags)'
     }),
     defineField({
       name: 'ctaPrimary',
@@ -51,8 +103,38 @@ export const hero = defineType({
         {
           type: 'object',
           fields: [
-            defineField({ name: 'number', title: 'Number/Text', type: 'string' }),
-            defineField({ name: 'label', title: 'Label', type: 'string' })
+            defineField({
+              name: 'value', title: 'Value', type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  styles: [],
+                  lists: [],
+                  marks: {
+                    decorators: [
+                      { title: 'Strong', value: 'strong' },
+                      { title: 'Emphasis', value: 'em' }
+                    ]
+                  }
+                }
+              ],
+            }),
+            defineField({
+              name: 'label', title: 'Label', type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  styles: [],
+                  lists: [],
+                  marks: {
+                    decorators: [
+                      { title: 'Strong', value: 'strong' },
+                      { title: 'Emphasis', value: 'em' }
+                    ]
+                  }
+                }
+              ],
+            })
           ]
         }
       ]
@@ -84,7 +166,8 @@ export const hero = defineType({
               fields: [
                 defineField({ name: 'name', title: 'Name', type: 'string' }),
                 defineField({ name: 'score', title: 'Score', type: 'number' }),
-                defineField({ name: 'badge', title: 'Badge Type', type: 'string', 
+                defineField({
+                  name: 'badge', title: 'Badge Type', type: 'string',
                   options: {
                     list: [
                       { title: 'Strong', value: 'strong' },
@@ -118,15 +201,27 @@ export const hero = defineType({
   ],
   preview: {
     select: {
-      title: 'title',
+      titleLines: 'titleLines',
       subtitle: 'subtitle'
     },
-    prepare({ title, subtitle }) {
-      const titleText = title && title.length > 0 ? title.join(' ') : 'Hero Section';
+    prepare({ titleLines, subtitle }) {
+      const titleText = titleLines && titleLines.length > 0 ?
+        titleLines.map((line: any) => {
+          const text = line.text;
+          const plainText = Array.isArray(text) ?
+            text.map(t => typeof t === 'string' ? t : t._type === 'block' ? t.children?.map((c: any) => c.text).join('') || '' : '').join(' ') :
+            text || '';
+          return plainText;
+        }).join(' ') : 'Hero Section';
+
+      const subtitleText = subtitle && Array.isArray(subtitle) ?
+        subtitle.map(t => typeof t === 'string' ? t : t._type === 'block' ? t.children?.map((c: any) => c.text).join('') || '' : '').join(' ') :
+        subtitle || '';
+
       return {
         title: titleText,
         subtitle: 'Hero Section',
-        description: subtitle
+        description: subtitleText
       };
     }
   }
