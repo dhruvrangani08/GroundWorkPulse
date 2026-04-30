@@ -46,8 +46,7 @@ const Header: React.FC<HeaderProps> = ({
           background: 'rgba(0,0,0,0.4)',
           zIndex: 9998,
           opacity: isMenuOpen ? 1 : 0,
-          // FIX: was missing pointer-events none when closed — backdrop was invisible
-          // but still blocking clicks on the hamburger button beneath it
+          top: '86px',
           pointerEvents: isMenuOpen ? 'all' : 'none',
           transition: 'opacity 0.3s ease',
         }}
@@ -66,10 +65,9 @@ const Header: React.FC<HeaderProps> = ({
           boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
           transform: isMenuOpen ? 'translateY(0)' : 'translateY(-110%)',
           opacity: isMenuOpen ? 1 : 0,
-          // FIX 1: Added pointerEvents: 'none' when closed.
-          // so clicks on the hamburger never reached the button.
+          clipPath: isMenuOpen ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)',
           pointerEvents: isMenuOpen ? 'all' : 'none',
-          transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
+          transition: 'clip-path 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         <ul style={{
