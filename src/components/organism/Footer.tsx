@@ -1,5 +1,9 @@
+import React from 'react';
+import { toHTML } from '@portabletext/to-html';
+import type { TypedObject } from '@portabletext/types';
+
 interface FooterProps {
-  logoText?: string;
+  logoText?: string | TypedObject[];
   logoTagline?: string;
   columns?: Array<{
     heading: string;
@@ -22,7 +26,12 @@ const Footer: React.FC<FooterProps> = ({
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <div className="nav-mark">{logoText}<em>.</em></div>
+          <div 
+            className="nav-mark"
+            dangerouslySetInnerHTML={{ 
+              __html: typeof logoText === 'string' ? logoText : toHTML(logoText)
+            }}
+          />
           <div className="footer-tag">{logoTagline}</div>
         </div>
         {(columns ?? []).map((col, i) => (

@@ -8,8 +8,20 @@ export const footer = defineType({
     defineField({
       name: 'logoText',
       title: 'Logo Text',
-      type: 'string',
-      initialValue: 'Groundwork',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' }
+            ]
+          }
+        }
+      ],
     }),
     defineField({
       name: 'logoTagline',
@@ -61,4 +73,20 @@ export const footer = defineType({
       initialValue: 'Flat fee. No per-seat pricing. Ever.',
     }),
   ],
+  preview: {
+    select: {
+      logoText: 'logoText',
+      logoTagline: 'logoTagline',
+    },
+    prepare(selection) {
+      const { logoText, logoTagline } = selection;
+      const logoTextPlain = logoText && typeof logoText === 'string' ? logoText : 
+        logoText.map((t: any) => typeof t === 'string' ? t : t._type === 'block' ? t.children?.map((c: any) => c.text).join('') || '' : '').join(' ');
+      return {
+        title: 'Footer',
+        subtitle: logoTagline || 'Footer section',
+        description: logoTextPlain,
+      };
+    },
+  },
 })
