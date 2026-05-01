@@ -6,7 +6,6 @@ interface HeroSectionProps {
   titleLines?: Array<{
     text: string | TypedObject[];
   }>;
-  italicLastWord?: boolean;
   subtitle?: string | TypedObject[];
   ctaPrimary?: {
     label: string;
@@ -45,7 +44,6 @@ interface HeroSectionProps {
 
 export default function HeroSection({
   titleLines,
-  italicLastWord,
   subtitle,
   ctaPrimary,
   ctaSecondary,
@@ -56,8 +54,32 @@ export default function HeroSection({
   const processContent = (content: string | TypedObject[] | undefined) => {
     if (!content) return '';
     if (typeof content === 'string') return content;
-    // Extract text content from portable text
-    return toHTML(content).replace(/<[^>]*>/g, '').trim();
+    // Convert portable text to HTML, preserving formatting
+    return toHTML(content).trim();
+  };
+
+  const formatTextWithWordSpans = (text: string) => {
+    const cleanText = text.replace(/<\/?p[^>]*>/g, '');
+    
+    const hasEmTag = cleanText.includes('<em>');
+    
+    if (hasEmTag) {
+      const parts = cleanText.split(/(<em>.*?<\/em>)/);
+      const result: React.ReactNode[] = [];
+      
+      parts.forEach((part, index) => {
+        if (part.startsWith('<em>') && part.endsWith('</em>')) {
+          const emContent = part.replace(/<\/?em>/g, '');
+          result.push(<em key={`em-${index}`}>{emContent}</em>);
+        } else if (part.trim()) {
+          result.push(<span key={`text-${index}`} className="word">{part.trim()}</span>);
+        }
+      });
+      
+      return <>{result}</>;
+    } else {
+      return <span className="word">{cleanText}</span>;
+    }
   };
 
   return (
@@ -68,33 +90,15 @@ export default function HeroSection({
         <div className="hero-left">
           <h1 className="hero-h1">
             {titleLines?.map((line, index) => {
-              const isLastLine = index === titleLines.length - 1;
               const text = processContent(line.text);
 
-              if (isLastLine && italicLastWord) {
-                const words = text.trim().split(' ');
-                const lastWord = words[words.length - 1];
-                const otherWords = words.slice(0, -1);
-
-                return (
-                  <React.Fragment key={index}>
-                    {otherWords.map((word, wordIndex) => (
-                      <span key={wordIndex} className="word">{word} </span>
-                    ))}
-                    <em>{lastWord}</em>
-                  </React.Fragment>
-                );
-              }
-
               return (
-                <span key={index} className="word" dangerouslySetInnerHTML={{ __html: text }} />
+                <React.Fragment key={index}>
+                  {formatTextWithWordSpans(text)}
+                  {index < titleLines.length - 1 && <br />}
+                </React.Fragment>
               );
-            }).map((element, index, array) => (
-              <React.Fragment key={index}>
-                {element}
-                {index < array.length - 1 && <br />}
-              </React.Fragment>
-            ))}
+            })}
           </h1>
 
           {subtitle && (

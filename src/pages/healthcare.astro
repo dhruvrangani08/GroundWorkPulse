@@ -1,7 +1,7 @@
 ---
 import MainLayout from "../layouts/main.astro";
 import { client } from "../sanity/client";
-import { HOME_QUERY } from "../sanity/queries/pageQueries";
+import { HEALTHCARE_QUERY } from "../sanity/queries/pageQueries";
 import HeroSection from "../components/organism/HeroSection";
 import { CredibilityLineSection } from "../components/sections/CredibilityLineSection";
 import { HowItWorksSection } from "../components/sections/HowItWorksSection";
@@ -13,16 +13,16 @@ import { PricingSection } from "../components/sections/PricingSection";
 import { FinalCTASection } from "../components/sections/FinalCTASection";
 
 // Fetch page data using Danny project pattern
-const homePage = await client.fetch(HOME_QUERY);
+const healthcarePage = await client.fetch(HEALTHCARE_QUERY);
 
 ---
 <MainLayout
-  title={homePage?.metaSections?.[0]?.metaTitle || "GroundWork Pulse"}
-  description={homePage?.metaSections?.[0]?.metaDescription || "Team Conditions. Clearly Measured."}
+  title={healthcarePage?.metaSections?.[0]?.metaTitle || "Healthcare Solutions - GroundWork Pulse"}
+  description={healthcarePage?.metaSections?.[0]?.metaDescription || "Team conditions measurement and improvement solutions specifically designed for healthcare organizations."}
 >
 
 {/* Dynamic sections from Sanity - Danny Project Pattern */}
-{homePage?.sections?.map((section: any, index: number) => {
+{healthcarePage?.sections?.map((section: any, index: number) => {
   
   // Hero Section Fragment
   if (section._type === "hero") {
@@ -139,6 +139,22 @@ const homePage = await client.fetch(HOME_QUERY);
         ctaText={section.ctaText || ""}
         ctaLink={section.ctaLink || ""}
         footerText={section.footerText || ""}
+      />
+    );
+  }
+  
+  // Legacy Hero Section (backward compatibility)
+  if (section._type === "heroSection") {
+    return (
+      <HeroSection 
+        client:load
+        titleLines={section.headingLine ? [{ text: section.headingLine }] : []}
+        subtitle={section.subHeadingLine || ""}
+        ctaPrimary={{
+          label: section.buttonText || "",
+          href: section.buttonLink || "#"
+        }}
+        shelfItems={[]}
       />
     );
   }

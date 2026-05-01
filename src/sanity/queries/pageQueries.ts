@@ -20,6 +20,11 @@ export const HOME_QUERY = /* groq */ `
   *[_type == "page" && slug.current == "home"][0]
 `;
 
+// Healthcare page specific query
+export const HEALTHCARE_QUERY = /* groq */ `
+  *[_type == "page" && slug.current == "healthcare"][0]
+`;
+
 // Page query for dynamic routing
 export const PAGE_QUERY = /* groq */ `
   *[_type == "page" && slug.current == $slug][0] {
