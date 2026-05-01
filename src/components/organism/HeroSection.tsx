@@ -60,13 +60,13 @@ export default function HeroSection({
 
   const formatTextWithWordSpans = (text: string) => {
     const cleanText = text.replace(/<\/?p[^>]*>/g, '');
-    
+
     const hasEmTag = cleanText.includes('<em>');
-    
+
     if (hasEmTag) {
       const parts = cleanText.split(/(<em>.*?<\/em>)/);
       const result: React.ReactNode[] = [];
-      
+
       parts.forEach((part, index) => {
         if (part.startsWith('<em>') && part.endsWith('</em>')) {
           const emContent = part.replace(/<\/?em>/g, '');
@@ -75,7 +75,7 @@ export default function HeroSection({
           result.push(<span key={`text-${index}`} className="word">{part.trim()}</span>);
         }
       });
-      
+
       return <>{result}</>;
     } else {
       return <span className="word">{cleanText}</span>;
@@ -127,7 +127,10 @@ export default function HeroSection({
           )}
 
           {shelfItems && shelfItems.length > 0 && (
-            <div className="hero-shelf">
+            <div
+              className="hero-shelf"
+              style={{ '--cols': shelfItems.length } as React.CSSProperties}
+            >
               {shelfItems.map((item: { value: string | TypedObject[]; label: string | TypedObject[] }, index: number) => (
                 <div key={index} className="shelf-item">
                   <span

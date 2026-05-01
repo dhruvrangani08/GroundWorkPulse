@@ -111,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({
       <nav className="nav">
         <div
           className="nav-container"
-          style={{ maxWidth: '1024px', margin: '0 auto', position: 'relative', zIndex: 10001 }}
+          style={{margin: '0 auto', position: 'relative', zIndex: 10001 }}
         >
           <a href={logoHref} className="nav-logo">
             <span className="nav-mark">{logoText}<em>.</em></span>
