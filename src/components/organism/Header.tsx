@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({
           width: '100%',
           background: '#fff',
           zIndex: 9999,
-          padding: '32px 24px',
+          padding: '24px',
           boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
           clipPath: isMenuOpen ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)',
           pointerEvents: isMenuOpen ? 'all' : 'none',
@@ -70,12 +70,11 @@ const Header: React.FC<HeaderProps> = ({
       >
         <ul style={{
           listStyle: 'none',
-          padding: 0,
           margin: '0 auto',
-          maxWidth: '400px',
           display: 'flex',
           flexDirection: 'column',
           gap: '20px',
+          padding: '0 20px',
         }}>
           {navItems?.map((item, index) => (
             <li key={index}>
@@ -94,16 +93,14 @@ const Header: React.FC<HeaderProps> = ({
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href={ctaHref}
-              className="nav-cta"
-              onClick={closeMenu}
-              style={{ fontSize: '16px', textDecoration: 'none' }}
-            >
-              {ctaLabel}
-            </a>
-          </li>
+          <a
+            href={ctaHref}
+            className="nav-cta !text-center"
+            onClick={closeMenu}
+            style={{ fontSize: '16px', textDecoration: 'none' }}
+          >
+            {ctaLabel}
+          </a>
         </ul>
       </div>
     </>
@@ -112,10 +109,6 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <nav className="nav">
-        {/* FIX 2: Added position: relative + zIndex: 10001 to the nav-container so
-            the hamburger button sits in a stacking context ABOVE the portal elements
-            (backdrop z-9998, menu z-9999). Without position:relative the z-index on
-            the button itself has no effect and the portal layers win. */}
         <div
           className="nav-container"
           style={{ maxWidth: '1024px', margin: '0 auto', position: 'relative', zIndex: 10001 }}
@@ -157,65 +150,6 @@ const Header: React.FC<HeaderProps> = ({
       </nav>
 
       {mounted && createPortal(mobileMenu, document.body)}
-
-      <style>{`
-        .nav-container {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-          padding: 0 20px;
-        }
-
-        .desktop-nav {
-          display: flex;
-          align-items: center;
-        }
-
-        .hamburger-menu {
-          display: none;
-          flex-direction: column;
-          gap: 5px;
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 8px;
-          /* FIX 3: Removed position:relative + z-index from the button itself.
-             z-index only works on positioned elements within the same stacking context.
-             The real fix is on the parent nav-container (see FIX 2 above). */
-        }
-
-        .hamburger-line {
-          display: block;
-          width: 25px;
-          height: 2px;
-          background: var(--graphite, #333);
-          border-radius: 2px;
-          transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .hamburger-line.open:nth-child(1) {
-          transform: translateY(7px) rotate(45deg);
-        }
-
-        .hamburger-line.open:nth-child(2) {
-          opacity: 0;
-          transform: scaleX(0);
-        }
-
-        .hamburger-line.open:nth-child(3) {
-          transform: translateY(-7px) rotate(-45deg);
-        }
-
-        @media (max-width: 1024px) {
-          .desktop-nav    { display: none; }
-          .hamburger-menu { display: flex; }
-        }
-
-        @media (min-width: 1025px) {
-          .hamburger-menu { display: none !important; }
-        }
-      `}</style>
     </>
   );
 };

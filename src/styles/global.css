@@ -1,3 +1,6 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 :root{
   /* Core palette — editorial, clinical, confident */
   --paper: #F5F3EE;            /* warm off-white canvas */
@@ -155,6 +158,59 @@ body::before{
   transition:transform 0.2s var(--ease), background 0.2s var(--ease);
 }
 .nav-cta:hover{ background:var(--ink-2); transform:translateY(-1px); }
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+}
+
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hamburger-line {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: var(--graphite, #333);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger-line.open:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-line.open:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger-line.open:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 1024px) {
+  .desktop-nav    { display: none; }
+  .hamburger-menu { display: flex; }
+}
+
+@media (min-width: 1025px) {
+  .hamburger-menu { display: none !important; }
+}
 
 /* ===== HERO ===== */
 .hero{
