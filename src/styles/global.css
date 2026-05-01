@@ -222,6 +222,11 @@ body::before{
   align-items:center;
   overflow:hidden;
 }
+.hero-meta-text{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--graphite);
+}
 .hero-ambient{
   position:absolute; inset:0; pointer-events:none; z-index:0;
 }

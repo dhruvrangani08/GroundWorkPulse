@@ -30,6 +30,7 @@ const homePage = await client.fetch(HOME_QUERY);
       <HeroSection 
         client:load
         titleLines={section.titleLines || []}
+        metaText={section.metaText || ""}
         subtitle={section.subtitle || ""}
         ctaPrimary={section.ctaPrimary}
         ctaSecondary={section.ctaSecondary}

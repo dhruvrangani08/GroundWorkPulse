@@ -30,6 +30,7 @@ const healthcarePage = await client.fetch(HEALTHCARE_QUERY);
       <HeroSection 
         client:load
         titleLines={section.titleLines || []}
+        metaText={section.metaText || ""}
         subtitle={section.subtitle || ""}
         ctaPrimary={section.ctaPrimary}
         ctaSecondary={section.ctaSecondary}

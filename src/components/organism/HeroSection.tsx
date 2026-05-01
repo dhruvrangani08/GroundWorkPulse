@@ -6,6 +6,7 @@ interface HeroSectionProps {
   titleLines?: Array<{
     text: string | TypedObject[];
   }>;
+  metaText?: string;
   subtitle?: string | TypedObject[];
   ctaPrimary?: {
     label: string;
@@ -44,6 +45,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({
   titleLines,
+  metaText,
   subtitle,
   ctaPrimary,
   ctaSecondary,
@@ -88,6 +90,12 @@ export default function HeroSection({
         <div className="hero-ambient"></div>
 
         <div className="hero-left">
+          {metaText && (
+            <div className="hero-meta">
+              <span className="hero-dot"></span>
+              <span className="hero-meta-text">{metaText}</span>
+            </div>
+          )}
           <h1 className="hero-h1">
             {titleLines?.map((line, index) => {
               const text = processContent(line.text);

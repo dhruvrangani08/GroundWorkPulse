@@ -7,7 +7,7 @@ export const hero = defineType({
   fields: [
     defineField({
       name: 'titleLines',
-      title: 'Title Lines',
+      title: 'Hero Title Lines',
       type: 'array',
       of: [
         {
@@ -15,7 +15,7 @@ export const hero = defineType({
           fields: [
             defineField({
               name: 'text',
-              title: 'Line Text',
+              title: 'Text',
               type: 'array',
               of: [
                 {
@@ -30,6 +30,7 @@ export const hero = defineType({
                   }
                 }
               ],
+              validation: Rule => Rule.required(),
               description: 'Title line text with HTML support (supports strong and em tags)'
             })
           ],
@@ -50,6 +51,12 @@ export const hero = defineType({
         }
       ],
       description: 'Array of title lines (add/remove as needed)'
+    }),
+    defineField({
+      name: 'metaText',
+      title: 'Hero Meta Text',
+      type: 'string',
+      description: 'Meta text displayed above the hero title (e.g., industry focus)'
     }),
     defineField({
       name: 'subtitle',
