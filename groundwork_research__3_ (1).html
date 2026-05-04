@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groundwork | The Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Core palette */
+  --paper: #F5F3EE;
+  --paper-2: #EDEAE2;
+  --paper-3: #E4E0D6;
+  --ink: #0A0E1A;
+  --ink-2: #1A1F2E;
+  --ink-3: #2D3343;
+  --graphite: #5A6170;
+  --ink-soft: #3A3A3A;         /* darker than graphite, for readable body */
+  --graphite-2: #8A8F9A;
+  --rule: #D8D3C6;
+  --rule-dark: rgba(245,243,238,0.1);
+
+  /* Accent */
+  --accent: #C5D93F;
+  --accent-2: #D4E157;
+  --accent-deep: #A8BC2E;
+  --accent-bg: rgba(197,217,63,0.12);
+  --accent-bg-2: rgba(197,217,63,0.06);
+
+  --crimson: #8B1D2E;
+  --crimson-soft: rgba(139,29,46,0.08);
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(10,14,26,0.04), 0 1px 3px rgba(10,14,26,0.03);
+  --shadow: 0 4px 12px rgba(10,14,26,0.06), 0 2px 4px rgba(10,14,26,0.04);
+  --shadow-lg: 0 24px 48px -12px rgba(10,14,26,0.18), 0 8px 16px rgba(10,14,26,0.06);
+
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body{
+  font-family:'Geist', -apple-system, sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.5;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  font-feature-settings:"ss01","ss02","cv11";
+}
+::selection{ background:var(--accent); color:var(--ink); }
+
+/* Paper grain */
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity:0.18;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* Type utilities */
+.mono{ font-family:'JetBrains Mono', monospace; font-feature-settings:"zero","ss01"; }
+.eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--graphite);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{
+  content:'';
+  width:24px; height:1px;
+  background:var(--ink);
+}
+.eyebrow.bare::before{ display:none; }
+.eyebrow.on-dark{ color:var(--accent); }
+.eyebrow.on-dark::before{ background:var(--accent); }
+
+/* ===== NAV ===== */
+.nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(245,243,238,0.82);
+  backdrop-filter:blur(20px) saturate(1.4);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom:1px solid var(--rule);
+  padding:0 40px;
+  height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.nav-logo{
+  display:flex; align-items:baseline; gap:10px;
+  text-decoration:none; color:var(--ink);
+}
+.nav-mark{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  font-weight:500;
+  letter-spacing:-0.02em;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.nav-mark em{ font-style:italic; font-variation-settings:"SOFT" 100, "WONK" 0; }
+.nav-tag{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--graphite-2);
+  border-left:1px solid var(--rule);
+  padding-left:10px;
+}
+.nav-links{
+  display:flex; align-items:center; gap:36px; list-style:none;
+}
+.nav-links a{
+  font-size:14px; color:var(--graphite); text-decoration:none;
+  transition:color 0.2s var(--ease);
+  position:relative;
+}
+.nav-links a:not(.nav-cta):hover{ color:var(--ink); }
+.nav-links a:not(.nav-cta)::after{
+  content:''; position:absolute; left:0; right:0; bottom:-4px;
+  height:1px; background:var(--ink);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 0.3s var(--ease);
+}
+.nav-links a:not(.nav-cta):hover::after{ transform:scaleX(1); }
+.nav-links a.nav-active{ color:var(--ink); font-weight:500; }
+.nav-links a.nav-active::after{ transform:scaleX(1); background:var(--accent-deep); }
+.nav-cta{
+  background:var(--ink); color:var(--paper) !important;
+  padding:9px 18px; border-radius:var(--radius-sm);
+  font-size:13px; font-weight:500;
+  transition:transform 0.2s var(--ease), background 0.2s var(--ease);
+}
+.nav-cta:hover{ background:var(--ink-2); transform:translateY(-1px); }
+
+/* ===== HERO ===== */
+.research-hero{
+  position:relative;
+  padding:120px 40px 100px;
+  overflow:hidden;
+  border-bottom:1px solid var(--rule);
+}
+.research-hero-ambient{
+  position:absolute; inset:0; pointer-events:none; z-index:0;
+}
+.research-hero-ambient::before{
+  content:''; position:absolute;
+  top:-10%; right:-10%;
+  width:60%; height:80%;
+  background:radial-gradient(circle at center, var(--accent-bg) 0%, transparent 55%);
+  filter:blur(40px);
+}
+.research-hero-inner{
+  position:relative; z-index:1;
+  max-width:900px;
+  margin:0 auto;
+  text-align:center;
+}
+.research-hero h1{
+  font-family:'Fraunces', serif;
+  font-size:clamp(48px, 7vw, 88px);
+  font-weight:400;
+  letter-spacing:-0.025em;
+  line-height:1.05;
+  margin-top:20px;
+  margin-bottom:28px;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.research-hero h1 em{
+  font-style:italic;
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.research-hero-sub{
+  font-size:19px;
+  line-height:1.55;
+  color:var(--graphite);
+  max-width:680px;
+  margin:0 auto;
+}
+
+/* ===== SECTION BASE ===== */
+.section{
+  padding:120px 40px;
+  position:relative;
+  border-bottom:1px solid var(--rule);
+}
+.section.dark{
+  background:var(--ink);
+  color:var(--paper);
+  border-bottom:none;
+}
+.section-inner{
+  max-width:1240px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+.section-head{
+  display:grid;
+  grid-template-columns:1fr 1.2fr;
+  gap:80px;
+  margin-bottom:72px;
+  align-items:end;
+}
+.section-head.center{
+  display:block;
+  text-align:center;
+  max-width:760px;
+  margin-left:auto; margin-right:auto;
+  margin-bottom:72px;
+}
+.section-head.center .section-h2{ margin-top:20px; }
+.section-head.center .section-lede{ max-width:600px; margin:20px auto 0; }
+.section-h2{
+  font-family:'Fraunces', serif;
+  font-size:clamp(36px, 4.5vw, 60px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1.1;
+  margin-top:24px;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.section-h2 em{
+  font-style:italic;
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.section-lede{
+  font-size:17px;
+  line-height:1.6;
+  color:var(--graphite);
+}
+.section.dark .section-h2{ color:var(--paper); }
+.section.dark .section-lede{ color:rgba(245,243,238,0.65); }
+
+/* ===== PILLARS (Section 1) ===== */
+.pillars-intro{
+  max-width:760px;
+  margin:0 auto 64px;
+  text-align:center;
+  font-size:18px;
+  line-height:1.65;
+  color:var(--graphite);
+}
+.pillars-intro p{ margin-bottom:18px; }
+.pillars-intro p:last-child{ margin-bottom:0; }
+.pillars-intro strong{
+  color:var(--ink);
+  font-weight:500;
+}
+
+.pillars{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:24px;
+  margin-top:56px;
+}
+.pillar{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:var(--radius-lg);
+  padding:40px 36px;
+  position:relative;
+  transition:transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.pillar:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-lg);
+}
+.pillar-num{
+  font-family:'JetBrains Mono', monospace;
+  font-size:13px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--accent-deep);
+  font-weight:600;
+  margin-bottom:14px;
+}
+.pillar-name{
+  font-family:'Fraunces', serif;
+  font-size:38px;
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1;
+  margin-bottom:18px;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.pillar-name em{
+  font-style:italic;
+  color:var(--accent-deep);
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.pillar-question{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-size:19px;
+  font-weight:500;
+  color:var(--ink);
+  line-height:1.45;
+  margin-bottom:28px;
+  padding-bottom:24px;
+  border-bottom:1px dashed var(--rule);
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.pillar-conditions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.pillar-cond{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:14px;
+  color:var(--ink);
+  font-weight:500;
+}
+.pillar-cond::before{
+  content:'';
+  width:4px; height:4px;
+  border-radius:50%;
+  background:var(--accent-deep);
+  flex-shrink:0;
+}
+
+.pillars-coda{
+  max-width:700px;
+  margin:64px auto 0;
+  text-align:center;
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-size:22px;
+  line-height:1.5;
+  color:var(--ink);
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+  padding:32px 0;
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.pillars-coda em{
+  color:var(--accent-deep);
+}
+
+/* ===== SURVEY MOCKUP (Section 2) ===== */
+.survey-mockup{
+  max-width:640px;
+  margin:0 auto 80px;
+  background:var(--ink);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.survey-chrome{
+  padding:16px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--ink-3);
+}
+.survey-chrome-left{
+  display:flex; align-items:center; gap:10px;
+}
+.survey-dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px rgba(197,217,63,0.15);
+}
+.survey-chrome-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.survey-progress{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.12em;
+  color:rgba(245,243,238,0.45);
+}
+.survey-body{
+  padding:36px 32px 32px;
+}
+.survey-eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:rgba(245,243,238,0.4);
+  margin-bottom:20px;
+}
+.survey-item{
+  margin-bottom:32px;
+  padding-bottom:32px;
+  border-bottom:1px dashed rgba(245,243,238,0.12);
+}
+.survey-item:last-child{
+  margin-bottom:0;
+  padding-bottom:0;
+  border-bottom:none;
+}
+.survey-condition{
+  font-family:'JetBrains Mono', monospace;
+  font-size:9px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:10px;
+}
+.survey-question{
+  font-family:'Fraunces', serif;
+  font-size:19px;
+  line-height:1.4;
+  color:var(--paper);
+  letter-spacing:-0.01em;
+  margin-bottom:20px;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.survey-scale{
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:6px;
+  margin-bottom:12px;
+}
+.scale-option{
+  border:1px solid rgba(245,243,238,0.15);
+  border-radius:var(--radius-sm);
+  padding:12px 8px;
+  text-align:center;
+  font-family:'JetBrains Mono', monospace;
+  font-size:18px;
+  color:rgba(245,243,238,0.5);
+  cursor:pointer;
+  transition:all 0.2s var(--ease);
+  background:rgba(245,243,238,0.02);
+}
+.scale-option:hover{
+  background:rgba(245,243,238,0.05);
+  color:var(--paper);
+}
+.scale-option.selected{
+  background:var(--accent);
+  color:var(--ink);
+  border-color:var(--accent);
+  font-weight:600;
+}
+.scale-labels{
+  display:flex;
+  justify-content:space-between;
+  font-family:'JetBrains Mono', monospace;
+  font-size:9px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:rgba(245,243,238,0.4);
+}
+.survey-footer{
+  padding:16px 32px;
+  background:rgba(245,243,238,0.03);
+  border-top:1px solid var(--ink-3);
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.08em;
+  color:rgba(245,243,238,0.5);
+  text-align:center;
+}
+
+/* ===== INSTRUMENT LIST (Section 2 bottom) ===== */
+.instrument-intro{
+  max-width:760px;
+  margin:0 auto 56px;
+  text-align:center;
+  font-size:17px;
+  line-height:1.6;
+  color:var(--graphite);
+}
+.instrument{
+  max-width:900px;
+  margin:0 auto;
+}
+.instrument-pillar{
+  margin-bottom:64px;
+}
+.instrument-pillar:last-child{ margin-bottom:0; }
+.instrument-pillar-head{
+  display:flex;
+  align-items:baseline;
+  gap:16px;
+  margin-bottom:28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--rule);
+}
+.instrument-pillar-num{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--accent-deep);
+  font-weight:600;
+}
+.instrument-pillar-name{
+  font-family:'Fraunces', serif;
+  font-size:28px;
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1.1;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.instrument-pillar-name em{
+  font-style:italic;
+  color:var(--accent-deep);
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.instrument-condition{
+  margin-bottom:40px;
+}
+.instrument-condition:last-child{ margin-bottom:0; }
+.instrument-cond-name{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  font-weight:500;
+  letter-spacing:-0.015em;
+  color:var(--ink);
+  margin-bottom:18px;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.instrument-items{
+  list-style:none;
+  counter-reset:item-counter;
+  padding:0;
+}
+.instrument-items li{
+  position:relative;
+  padding:14px 0 14px 44px;
+  border-bottom:1px dashed var(--rule);
+  font-size:15.5px;
+  line-height:1.55;
+  color:var(--ink);
+  counter-increment:item-counter;
+}
+.instrument-items li:last-child{
+  border-bottom:none;
+}
+.instrument-items li::before{
+  content:counter(item-counter, decimal-leading-zero);
+  position:absolute;
+  left:0; top:14px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.12em;
+  color:var(--accent-deep);
+  font-weight:600;
+}
+
+/* Continuous counter across all items 1-18 */
+.instrument{ counter-reset:all-items; }
+.instrument-items li{ counter-increment:all-items; }
+.instrument-items li::before{
+  content:counter(all-items, decimal-leading-zero);
+}
+
+/* ===== OPEN-TEXT (Section 3) ===== */
+.prompts-wrap{
+  max-width:800px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+.prompt-card{
+  background:var(--ink);
+  color:var(--paper);
+  border-radius:var(--radius-lg);
+  padding:36px 40px;
+  position:relative;
+}
+.prompt-num{
+  font-family:'JetBrains Mono', monospace;
+  font-size:13px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+  font-weight:600;
+  background:var(--accent);
+  color:var(--ink);
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:3px;
+}
+.prompt-text{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  line-height:1.5;
+  font-weight:400;
+  letter-spacing:-0.01em;
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+  font-style:italic;
+}
+.prompts-intro{
+  max-width:720px;
+  margin:0 auto 56px;
+  text-align:center;
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink-soft, #3A3A3A);
+  font-weight:400;
+}
+
+/* ===== METHODOLOGY (Section 4) ===== */
+.method-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:24px;
+  max-width:1040px;
+  margin:0 auto;
+}
+.method-card{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:var(--radius-lg);
+  padding:36px 32px;
+}
+.method-card-label{
+  font-family:'JetBrains Mono', monospace;
+  font-size:13px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--accent-deep);
+  font-weight:600;
+  margin-bottom:14px;
+}
+.method-card-name{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  font-weight:500;
+  letter-spacing:-0.015em;
+  margin-bottom:14px;
+  line-height:1.2;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.method-card-body{
+  font-size:16px;
+  line-height:1.6;
+  color:var(--ink-soft, #3A3A3A);
+  font-weight:400;
+}
+
+/* ===== ORIGIN (Section 5) ===== */
+.origin-inner{
+  max-width:760px;
+  margin:0 auto;
+  padding:0 20px;
+  text-align:center;
+}
+.origin-body p{
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  line-height:1.55;
+  color:var(--paper);
+  font-weight:400;
+  letter-spacing:-0.005em;
+  margin-bottom:28px;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.origin-body p:last-child{ margin-bottom:0; }
+.origin-body em{
+  color:var(--accent);
+  font-style:italic;
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+
+/* ===== FAQ (Section 6) ===== */
+.faq-wrap{
+  max-width:900px;
+  margin:0 auto;
+}
+.faq-item{
+  border-bottom:1px solid var(--rule);
+  padding:28px 0;
+  cursor:pointer;
+  transition:background 0.2s var(--ease);
+}
+.faq-item:first-child{
+  border-top:1px solid var(--rule);
+}
+.faq-q{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:32px;
+  font-family:'Fraunces', serif;
+  font-size:22px;
+  font-weight:500;
+  letter-spacing:-0.015em;
+  color:var(--ink);
+  line-height:1.3;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.faq-toggle{
+  font-family:'JetBrains Mono', monospace;
+  font-size:20px;
+  color:var(--accent-deep);
+  font-weight:400;
+  transition:transform 0.3s var(--ease);
+  flex-shrink:0;
+  line-height:1;
+  margin-top:4px;
+}
+.faq-item.open .faq-toggle{ transform:rotate(45deg); }
+.faq-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s var(--ease), padding 0.4s var(--ease);
+  font-size:16px;
+  line-height:1.65;
+  color:var(--graphite);
+}
+.faq-item.open .faq-a{
+  max-height:400px;
+  padding-top:16px;
+}
+
+/* ===== CTA FOOTER ===== */
+.research-cta{
+  padding:100px 40px 120px;
+  text-align:center;
+  background:var(--paper-2);
+  border-bottom:1px solid var(--rule);
+}
+.research-cta h2{
+  font-family:'Fraunces', serif;
+  font-size:clamp(32px, 4vw, 48px);
+  font-weight:400;
+  letter-spacing:-0.02em;
+  line-height:1.15;
+  margin-top:20px;
+  margin-bottom:16px;
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.research-cta h2 em{
+  font-style:italic;
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.research-cta p{
+  font-size:17px;
+  color:var(--graphite);
+  max-width:560px;
+  margin:0 auto 32px;
+}
+.research-cta-actions{
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:16px 28px;
+  font-size:15px;
+  font-weight:500;
+  text-decoration:none;
+  border-radius:var(--radius-sm);
+  transition:all 0.2s var(--ease);
+  border:1px solid transparent;
+  cursor:pointer;
+}
+.btn-primary{
+  background:var(--ink);
+  color:var(--paper);
+}
+.btn-primary:hover{
+  background:var(--ink-2);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+}
+.btn-primary .arrow{
+  transition:transform 0.3s var(--ease);
+}
+.btn-primary:hover .arrow{ transform:translateX(4px); }
+.btn-ghost{
+  background:transparent;
+  color:var(--ink);
+  border-color:var(--rule);
+}
+.btn-ghost:hover{
+  background:var(--paper-2);
+  border-color:var(--ink);
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:var(--ink);
+  color:var(--paper);
+  padding:64px 40px 40px;
+}
+.footer-inner{
+  max-width:1240px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;
+  padding-bottom:48px;
+  border-bottom:1px solid var(--ink-3);
+}
+.footer-brand{
+  display:flex; flex-direction:column; gap:14px;
+}
+.footer-mark{
+  font-family:'Fraunces', serif;
+  font-size:28px;
+  font-weight:500;
+  letter-spacing:-0.02em;
+  color:var(--paper);
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.footer-mark em{ font-style:italic; font-variation-settings:"SOFT" 100, "WONK" 0; }
+.footer-tagline{
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(245,243,238,0.35);
+  margin-top:12px;
+}
+.footer-col-head{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:16px;
+  font-weight:600;
+}
+.footer-col ul{ list-style:none; }
+.footer-col li{ margin-bottom:10px; }
+.footer-col a{
+  font-size:14px;
+  color:rgba(245,243,238,0.65);
+  text-decoration:none;
+  transition:color 0.2s var(--ease);
+}
+.footer-col a:hover{ color:var(--paper); }
+.footer-bottom{
+  max-width:1240px;
+  margin:40px auto 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:12px;
+  color:rgba(245,243,238,0.4);
+}
+.footer-founder{
+  max-width:1240px;
+  margin:24px auto 0;
+  padding-top:24px;
+  border-top:1px solid var(--ink-3);
+  font-size:12px;
+  line-height:1.55;
+  color:rgba(245,243,238,0.45);
+  max-width:900px;
+}
+
+/* ===== OUTCOME CLAIMS ===== */
+.claims-intro{
+  max-width:760px;
+  margin:0 auto 64px;
+  text-align:center;
+  font-size:18px;
+  line-height:1.65;
+  color:var(--graphite);
+}
+.claims-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:24px;
+  max-width:1140px;
+  margin:0 auto;
+}
+.claim{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:var(--radius-lg);
+  padding:36px 32px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+}
+.claim::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:var(--accent);
+}
+.claim-stat{
+  font-family:'Fraunces', serif;
+  font-size:64px;
+  font-weight:400;
+  letter-spacing:-0.03em;
+  line-height:1;
+  color:var(--ink);
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+  margin-bottom:16px;
+}
+.claim-stat em{
+  font-style:italic;
+  color:var(--accent-deep);
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.claim-body{
+  font-size:15px;
+  line-height:1.55;
+  color:var(--ink);
+  margin-bottom:20px;
+  flex:1;
+}
+.claim-source{
+  font-family:'JetBrains Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--graphite-2);
+  padding-top:16px;
+  border-top:1px dashed var(--rule);
+}
+
+/* ===== CLOSING ARGUMENT CTA ===== */
+.closing-cta{
+  padding:140px 40px 160px;
+  background:var(--paper);
+  color:var(--ink);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.closing-cta::before{
+  content:'';
+  position:absolute;
+  top:-20%; right:-10%;
+  width:50%; height:80%;
+  background:radial-gradient(circle at center, rgba(197,217,63,0.12) 0%, transparent 60%);
+  filter:blur(60px);
+  pointer-events:none;
+}
+.closing-cta-inner{
+  max-width:760px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+.closing-cta h2{
+  font-family:'Fraunces', serif;
+  font-size:clamp(40px, 5vw, 64px);
+  font-weight:400;
+  letter-spacing:-0.025em;
+  line-height:1.1;
+  margin-top:24px;
+  margin-bottom:24px;
+  color:var(--ink);
+  font-variation-settings:"SOFT" 50, "opsz" 144;
+}
+.closing-cta h2 em{
+  font-style:italic;
+  color:var(--accent-deep);
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.closing-cta-sub{
+  font-family:'Fraunces', serif;
+  font-style:italic;
+  font-size:22px;
+  line-height:1.5;
+  color:var(--graphite);
+  margin-bottom:40px;
+  font-variation-settings:"SOFT" 100, "WONK" 0, "opsz" 144;
+}
+.closing-cta-actions{
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.btn-accent{
+  background:var(--accent);
+  color:var(--ink);
+  border:1px solid var(--accent);
+}
+.btn-accent:hover{
+  background:var(--accent-2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(197,217,63,0.25);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1100px){
+  .section-head{ grid-template-columns:1fr; gap:24px; }
+  .pillars{ grid-template-columns:1fr; gap:20px; }
+  .method-grid{ grid-template-columns:1fr; }
+  .footer-inner{ grid-template-columns:1fr 1fr; gap:32px; }
+  .claims-grid{ grid-template-columns:1fr; gap:20px; max-width:560px; }
+  .claim-stat{ font-size:52px; }
+}
+@media(max-width:640px){
+  .nav{ padding:0 24px; }
+  .nav-links{ gap:18px; }
+  .nav-links li:nth-child(1), .nav-links li:nth-child(4){ display:none; }
+  .nav-tag{ display:none; }
+  .research-hero, .section, .research-cta, .footer{ padding-left:24px; padding-right:24px; }
+  .section{ padding:80px 24px; }
+  .research-hero{ padding:80px 24px 64px; }
+  .footer-inner{ grid-template-columns:1fr; }
+  .footer-bottom{ flex-direction:column; gap:12px; text-align:center; }
+  .survey-body{ padding:28px 24px; }
+  .survey-scale{ gap:4px; }
+  .scale-option{ padding:10px 4px; font-size:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <span class="nav-mark">Ground<em>work</em></span>
+    <span class="nav-tag">Team Conditions. Clearly Measured.</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/healthcare.html">Healthcare</a></li>
+    <li><a href="/research.html" class="nav-active">Research</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/book.html" class="nav-cta">Get in touch →</a></li>
+  </ul>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="research-hero">
+  <div class="research-hero-ambient"></div>
+  <div class="research-hero-inner">
+    <div class="eyebrow bare" style="justify-content:center;">The research</div>
+    <h1>The science behind<br>the <em>six conditions.</em></h1>
+    <p class="research-hero-sub">
+      Built on decades of research in team performance and retention.<br>Refined through direct work with leaders and teams across industries.
+    </p>
+  </div>
+</section>
+
+<!-- ========== WHY THESE CONDITIONS MATTER ========== -->
+<section class="section" style="background:var(--paper-2);">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="eyebrow bare" style="justify-content:center;">Why these conditions</div>
+      <h2 class="section-h2">When these conditions are strong,<br><em>everything else follows.</em></h2>
+    </div>
+
+    <p class="claims-intro">
+      These six conditions are not theoretical. When they hold, teams perform at a completely different level. When they break down, performance and retention follow.
+    </p>
+
+    <div class="claims-grid">
+      <div class="claim">
+        <div class="claim-stat"><em>70%</em></div>
+        <p class="claim-body">of engagement is driven by the manager. Not pay. Not perks.</p>
+        <div class="claim-source">Gallup</div>
+      </div>
+      <div class="claim">
+        <div class="claim-stat"><em>76%</em></div>
+        <p class="claim-body">more likely to surface and solve problems with high psychological safety.</p>
+        <div class="claim-source">Harvard</div>
+      </div>
+      <div class="claim">
+        <div class="claim-stat"><em>50%</em></div>
+        <p class="claim-body">lower turnover risk when people feel they belong.</p>
+        <div class="claim-source">BetterUp</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 1 — FRAMEWORK ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="eyebrow bare" style="justify-content:center;">The framework</div>
+      <h2 class="section-h2">Three pillars.<br><em>Six conditions.</em></h2>
+    </div>
+
+    <div class="pillars-intro">
+      <p>The High-Performance Operating System<sup style="font-size:0.5em; vertical-align:super; letter-spacing:0.05em; margin-left:2px;">TM</sup> organizes the six conditions into three pillars.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">Pillar 01</div>
+        <h3 class="pillar-name"><em>Safety.</em></h3>
+        <p class="pillar-question">Am I safe here?</p>
+        <div class="pillar-conditions">
+          <div class="pillar-cond">Psychological Safety</div>
+          <div class="pillar-cond">Workload &amp; Resources</div>
+          <div class="pillar-cond">Fairness &amp; Recognition</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">Pillar 02</div>
+        <h3 class="pillar-name"><em>Understanding.</em></h3>
+        <p class="pillar-question">Do I understand what is expected and how I contribute?</p>
+        <div class="pillar-conditions">
+          <div class="pillar-cond">Role Clarity &amp; Agency</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">Pillar 03</div>
+        <h3 class="pillar-name"><em>Connection.</em></h3>
+        <p class="pillar-question">Do I belong?</p>
+        <div class="pillar-conditions">
+          <div class="pillar-cond">Belonging &amp; Meaning</div>
+          <div class="pillar-cond">Manager Relationship Quality</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 2 — THE PULSE ========== -->
+<section class="section" style="background:var(--paper-2);">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="eyebrow bare" style="justify-content:center;">The pulse</div>
+      <h2 class="section-h2">What your team <em>actually sees.</em></h2>
+    </div>
+
+    <p class="instrument-intro">
+      Short. Anonymous. Plain language.
+    </p>
+
+    <!-- Survey mockup -->
+    <div class="survey-mockup">
+      <div class="survey-chrome">
+        <div class="survey-chrome-left">
+          <span class="survey-dot"></span>
+          <span class="survey-chrome-label">Groundwork Pulse · Q2 2026</span>
+        </div>
+        <span class="survey-progress">3 of 18</span>
+      </div>
+      <div class="survey-body">
+        <div class="survey-eyebrow">Your honest response matters · Anonymous</div>
+
+        <div class="survey-item">
+          <div class="survey-condition">Psychological Safety</div>
+          <div class="survey-question">I can make a mistake on this team without being afraid of how others will react.</div>
+          <div class="survey-scale">
+            <div class="scale-option">1</div>
+            <div class="scale-option">2</div>
+            <div class="scale-option">3</div>
+            <div class="scale-option selected">4</div>
+            <div class="scale-option">5</div>
+          </div>
+          <div class="scale-labels">
+            <span>Strongly disagree</span>
+            <span>Strongly agree</span>
+          </div>
+        </div>
+
+        <div class="survey-item">
+          <div class="survey-condition">Workload &amp; Resources</div>
+          <div class="survey-question">I have enough time during my shift to do my work well.</div>
+          <div class="survey-scale">
+            <div class="scale-option">1</div>
+            <div class="scale-option">2</div>
+            <div class="scale-option selected">3</div>
+            <div class="scale-option">4</div>
+            <div class="scale-option">5</div>
+          </div>
+          <div class="scale-labels">
+            <span>Strongly disagree</span>
+            <span>Strongly agree</span>
+          </div>
+        </div>
+
+        <div class="survey-item">
+          <div class="survey-condition">Fairness &amp; Recognition</div>
+          <div class="survey-question">When I do good work, the recognition feels genuine.</div>
+          <div class="survey-scale">
+            <div class="scale-option">1</div>
+            <div class="scale-option">2</div>
+            <div class="scale-option">3</div>
+            <div class="scale-option">4</div>
+            <div class="scale-option selected">5</div>
+          </div>
+          <div class="scale-labels">
+            <span>Strongly disagree</span>
+            <span>Strongly agree</span>
+          </div>
+        </div>
+      </div>
+      <div class="survey-footer">
+        Responses are never tied to identifiers · Takes 3–4 minutes
+      </div>
+    </div>
+
+    <!-- Full instrument -->
+  </div>
+</section>
+
+<!-- ========== SECTION 3 — OPEN-TEXT ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="eyebrow bare" style="justify-content:center;">Qualitative layer</div>
+      <h2 class="section-h2">Words, not <em>just numbers.</em></h2>
+    </div>
+
+    <p class="prompts-intro">
+      Every pulse includes three open-text prompts. Numbers tell you where. Words tell you why. These are the prompts we ask every team, every cycle.
+    </p>
+
+    <div class="prompts-wrap">
+      <div class="prompt-card">
+        <div class="prompt-num">Prompt 01</div>
+        <div class="prompt-text">What is something leadership may not fully understand about what it feels like to work here right now?</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-num">Prompt 02</div>
+        <div class="prompt-text">What most helps your team do great work, and what most gets in the way?</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-num">Prompt 03</div>
+        <div class="prompt-text">If one thing changed in the next 90 days, what would make the biggest difference?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 4 — METHODOLOGY ========== -->
+<section class="section" style="background:var(--paper-2);">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="eyebrow bare" style="justify-content:center;">Methodology</div>
+      <h2 class="section-h2">How <em>we measure.</em></h2>
+    </div>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-card-label">01 · Scoring</div>
+        <h3 class="method-card-name">Zero to 100, per condition.</h3>
+        <p class="method-card-body">Each condition scores 0 to 100. The lowest is automatically flagged as your focus for the cycle.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-card-label">02 · Anonymity</div>
+        <h3 class="method-card-name">Completely anonymous.</h3>
+        <p class="method-card-body">Responses are never tied to individuals.</p>
+      </div>
+
+      <div class="method-card">
+        <div class="method-card-label">03 · Cadence</div>
+        <h3 class="method-card-name">Quarterly pulses.</h3>
+        <p class="method-card-body">Quarterly pulses show what is actually improving over time.</p>
+      </div>
+
+      <div class="method-card" style="background:var(--ink); color:var(--paper); border-color:var(--ink-3);">
+        <div class="method-card-label" style="color:var(--accent);">04 · Sample size</div>
+        <h3 class="method-card-name" style="color:var(--paper);">We won't report a score we don't trust.</h3>
+        <p class="method-card-body" style="color:rgba(245,243,238,0.7);">A minimum number of responses is required before a score is shown. Otherwise, it's not real data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 5 — ORIGIN ========== -->
+<section class="section dark">
+  <div class="section-inner">
+    <div class="section-head center">
+      <div class="eyebrow on-dark bare" style="justify-content:center;">Origin</div>
+      <h2 class="section-h2">How the framework <em>came together.</em></h2>
+    </div>
+
+    <div class="origin-inner">
+      <div class="origin-body">
+        <p>The framework is built from two sources: <em>decades of research on how teams perform,</em> and direct experience working inside them.</p>
+
+        <p>Across industries and environments, the same pattern emerges. When these conditions are strong, people perform and stay. When they break down, everything else follows.</p>
+
+        <p>This is not theory. <em>It is a system built from how real teams actually operate.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CLOSING ARGUMENT CTA ========== -->
+<section class="closing-cta">
+  <div class="closing-cta-inner">
+    <div class="eyebrow bare" style="justify-content:center;">Measure what matters</div>
+    <h2>Measurement is <em>the foundation.</em></h2>
+    <p class="closing-cta-sub">Without it, you are guessing about the thing that matters most.</p>
+    <div class="closing-cta-actions">
+      <a href="/book.html" class="btn btn-accent">
+        Get in touch
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-mark">Ground<em>work</em></span>
+      <p class="footer-tagline">Team Conditions. Clearly Measured.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Explore</div>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/healthcare.html">Healthcare</a></li>
+        <li><a href="/#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Get started</div>
+      <ul>
+        <li><a href="/book.html">Get in touch</a></li>
+        <li><a href="mailto:hello@groundworkpulse.com">hello@groundworkpulse.com</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-head">Legal</div>
+      <ul>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Groundwork. All rights reserved.</span>
+    <span class="mono" style="color:rgba(245,243,238,0.4);">hello@groundworkpulse.com</span>
+  </div>
+  <div class="footer-founder">
+    Groundwork is built by a team led by Danny Goldberg, a workplace performance strategist and operator who previously built and sold an eight-figure global business.
+  </div>
+</footer>
+
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    item.classList.toggle('open');
+  });
+});
+
+// Survey scale option toggle (for demo feel)
+document.querySelectorAll('.survey-item').forEach(item => {
+  const options = item.querySelectorAll('.scale-option');
+  options.forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      options.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+});
+</script>
+
+</body>
+</html>
