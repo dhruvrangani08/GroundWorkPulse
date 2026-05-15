@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Core palette — editorial, clinical, confident */
-  --paper: #F5F3EE;            /* warm off-white canvas */
+  /* Core palette - editorial, clinical, confident */
+  --paper: #F4F1EA;            /* warm off-white canvas */
   --paper-2: #EDEAE2;          /* secondary surface */
   --paper-3: #E4E0D6;          /* tertiary / borders */
   --ink: #0A0E1A;              /* near-black with a hint of blue */
@@ -22,14 +22,14 @@
   --rule: #D8D3C6;             /* divider */
   --rule-dark: rgba(245,243,238,0.1);
 
-  /* Accent — sulfur/chartreuse. Signals measurement, highlighter, data */
-  --accent: #C5D93F;
-  --accent-2: #D4E157;
-  --accent-deep: #A8BC2E;
-  --accent-bg: rgba(197,217,63,0.12);
-  --accent-bg-2: rgba(197,217,63,0.06);
+  /* Accent - sulfur/chartreuse. Signals measurement, highlighter, data */
+  --accent: #C4D82E;
+  --accent-2: #D4E85A;
+  --accent-deep: #A8B82A;
+  --accent-bg: rgba(196,216,46,0.12);
+  --accent-bg-2: rgba(196,216,46,0.06);
 
-  /* Risk / alert — deep editorial crimson */
+  /* Risk / alert - deep editorial crimson */
   --crimson: #8B1D2E;
   --crimson-soft: rgba(139,29,46,0.08);
 
@@ -40,7 +40,7 @@
   --shadow-sm: 0 1px 2px rgba(10,14,26,0.04), 0 1px 3px rgba(10,14,26,0.03);
   --shadow: 0 4px 12px rgba(10,14,26,0.06), 0 2px 4px rgba(10,14,26,0.04);
   --shadow-lg: 0 24px 48px -12px rgba(10,14,26,0.18), 0 8px 16px rgba(10,14,26,0.06);
-  --shadow-glow: 0 0 0 1px rgba(197,217,63,0.2), 0 12px 32px rgba(197,217,63,0.12);
+  --shadow-glow: 0 0 0 1px rgba(196,216,46,0.2), 0 12px 32px rgba(196,216,46,0.12);
 
   --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
 }
@@ -197,7 +197,7 @@ body::before{
   filter:blur(40px);
 }
 
-/* Diagonal rule — editorial detail */
+/* Diagonal rule - editorial detail */
 .hero::after{
   content:''; position:absolute;
   left:40px; right:40px; bottom:40px;
@@ -335,7 +335,7 @@ body::before{
   display:block;
 }
 
-/* ===== HERO DASHBOARD — the product shot ===== */
+/* ===== HERO DASHBOARD - the product shot ===== */
 .hero-right{
   position:relative; z-index:2;
   perspective:1400px;
@@ -359,7 +359,7 @@ body::before{
 .dash::before{
   content:'';
   position:absolute; inset:0;
-  background:radial-gradient(circle at 30% 0%, rgba(197,217,63,0.08) 0%, transparent 50%);
+  background:radial-gradient(circle at 30% 0%, rgba(196,216,46,0.08) 0%, transparent 50%);
   pointer-events:none;
 }
 .dash-chrome{
@@ -436,7 +436,7 @@ body::before{
   border-radius:12px;
   background:linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  box-shadow:0 8px 24px rgba(197,217,63,0.35), 0 1px 0 rgba(255,255,255,0.3) inset;
+  box-shadow:0 8px 24px rgba(196,216,46,0.35), 0 1px 0 rgba(255,255,255,0.3) inset;
 }
 .dash-score-num{
   font-family:'Fraunces', serif;
@@ -466,7 +466,7 @@ body::before{
 }
 .tile.focus{
   background:var(--accent-bg);
-  border-color:rgba(197,217,63,0.4);
+  border-color:rgba(196,216,46,0.4);
 }
 .tile.focus::before{
   content:''; position:absolute;
@@ -496,12 +496,12 @@ body::before{
   letter-spacing:0.08em; text-transform:uppercase;
   margin-top:6px;
 }
-.b-strong{ background:rgba(197,217,63,0.15); color:var(--accent); }
-.b-focus{ background:rgba(197,217,63,0.2); color:var(--accent); }
+.b-strong{ background:rgba(196,216,46,0.15); color:var(--accent); }
+.b-focus{ background:rgba(196,216,46,0.2); color:var(--accent); }
 .b-unstable{ background:rgba(239,164,60,0.15); color:#F4B860; }
 .b-risk{ background:rgba(255,120,120,0.12); color:#FF8C8C; }
 
-/* Delta comparison card — floats beside the dashboard */
+/* Delta comparison card - floats beside the dashboard */
 .dash-delta{
   position:absolute;
   bottom:-24px; left:-24px;
@@ -746,7 +746,7 @@ body::before{
   max-height:200px;
 }
 
-/* Product showcase screen — alt visual */
+/* Product showcase screen - alt visual */
 .showcase-screen{
   background:var(--ink);
   border-radius:var(--radius-lg);
@@ -1078,7 +1078,7 @@ body::before{
   font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
   color:var(--accent-deep);
   background:var(--accent-bg);
-  border:1px solid rgba(197,217,63,0.3);
+  border:1px solid rgba(196,216,46,0.3);
   padding:10px 16px;
   border-radius:6px;
   display:inline-flex; align-items:center; gap:10px;
@@ -1257,7 +1257,7 @@ body::before{
   position:absolute; top:50%; left:50%;
   transform:translate(-50%, -50%);
   width:800px; height:800px;
-  background:radial-gradient(circle, rgba(197,217,63,0.14) 0%, transparent 60%);
+  background:radial-gradient(circle, rgba(196,216,46,0.14) 0%, transparent 60%);
   pointer-events:none;
 }
 .final-cta-inner{ position:relative; z-index:1; max-width:720px; margin:0 auto; }
@@ -1334,7 +1334,7 @@ body::before{
 .form-field select{
   appearance:none;
   -webkit-appearance:none;
-  background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3e%3cpath fill='none' stroke='%23F5F3EE' stroke-opacity='0.5' stroke-width='1.5' d='M2 4.5l4 4 4-4'/%3e%3c/svg%3e");
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3e%3cpath fill='none' stroke='%23F4F1EA' stroke-opacity='0.5' stroke-width='1.5' d='M2 4.5l4 4 4-4'/%3e%3c/svg%3e");
   background-repeat:no-repeat;
   background-position:right 14px center;
   padding-right:36px;
@@ -1381,12 +1381,12 @@ body::before{
   display:inline-flex;
   align-items:center;
   gap:10px;
-  box-shadow:0 4px 20px rgba(197,217,63,0.25);
+  box-shadow:0 4px 20px rgba(196,216,46,0.25);
 }
 .form-submit button:hover{
   background:var(--accent-deep);
   transform:translateY(-2px);
-  box-shadow:0 8px 28px rgba(197,217,63,0.35);
+  box-shadow:0 8px 28px rgba(196,216,46,0.35);
 }
 .form-submit button .arrow{
   transition:transform 0.2s var(--ease);
@@ -1408,8 +1408,8 @@ body::before{
   max-width:520px;
   margin:0 auto;
   padding:48px 40px;
-  background:rgba(197,217,63,0.08);
-  border:1px solid rgba(197,217,63,0.25);
+  background:rgba(196,216,46,0.08);
+  border:1px solid rgba(196,216,46,0.25);
   border-radius:var(--radius-lg);
   text-align:center;
 }
@@ -1426,7 +1426,7 @@ body::before{
   color:var(--ink);
   font-size:26px;
   font-weight:600;
-  box-shadow:0 4px 20px rgba(197,217,63,0.35);
+  box-shadow:0 4px 20px rgba(196,216,46,0.35);
 }
 .form-thankyou h3{
   font-family:'Fraunces', serif;
@@ -1456,12 +1456,12 @@ body::before{
 }
 .btn-accent{
   background:var(--accent); color:var(--ink);
-  box-shadow:0 4px 20px rgba(197,217,63,0.25);
+  box-shadow:0 4px 20px rgba(196,216,46,0.25);
 }
 .btn-accent:hover{
   background:var(--accent-deep);
   transform:translateY(-2px);
-  box-shadow:0 8px 28px rgba(197,217,63,0.35);
+  box-shadow:0 8px 28px rgba(196,216,46,0.35);
 }
 .btn-light{
   color:var(--paper);
@@ -1608,7 +1608,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
 .benchmark-dot{
   width:6px; height:6px; border-radius:50%;
   background:var(--accent);
-  box-shadow:0 0 0 3px rgba(197,217,63,0.15);
+  box-shadow:0 0 0 3px rgba(196,216,46,0.15);
 }
 .benchmark-chrome-label{
   font-family:'JetBrains Mono',monospace;
@@ -1618,7 +1618,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
 .benchmark-pill{
   font-family:'JetBrains Mono',monospace;
   font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
-  background:rgba(197,217,63,0.15);
+  background:rgba(196,216,46,0.15);
   color:var(--accent);
   padding:4px 10px;
   border-radius:20px;
@@ -1664,7 +1664,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
   border-radius:12px;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center;
-  box-shadow:0 8px 24px rgba(197,217,63,0.3), 0 1px 0 rgba(255,255,255,0.3) inset;
+  box-shadow:0 8px 24px rgba(196,216,46,0.3), 0 1px 0 rgba(255,255,255,0.3) inset;
 }
 .benchmark-score-box-label{
   font-family:'JetBrains Mono',monospace;
@@ -1842,7 +1842,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
 .roi-section::before{
   content:''; position:absolute;
   top:-20%; right:-10%; width:50%; height:70%;
-  background:radial-gradient(circle at center, rgba(197,217,63,0.08) 0%, transparent 60%);
+  background:radial-gradient(circle at center, rgba(196,216,46,0.08) 0%, transparent 60%);
   pointer-events:none; filter:blur(40px);
 }
 .roi-layout{
@@ -1883,7 +1883,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
   width:22px; height:22px;
   background:var(--accent);
   border-radius:50%; border:3px solid var(--ink);
-  box-shadow:0 0 0 1px var(--accent), 0 2px 8px rgba(197,217,63,0.4);
+  box-shadow:0 0 0 1px var(--accent), 0 2px 8px rgba(196,216,46,0.4);
   cursor:grab;
   transition:transform 0.2s var(--ease);
 }
@@ -2243,7 +2243,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
       <div style="background:var(--paper); border:1px solid var(--rule); border-radius:var(--radius-lg); padding:32px 28px;">
         <div class="eyebrow" style="margin-bottom:16px;">03</div>
         <h3 style="font-family:'Fraunces',serif; font-size:22px; font-weight:400; line-height:1.25; letter-spacing:-0.015em; margin-bottom:12px; font-variation-settings:'SOFT' 50, 'opsz' 144;">You get a score. Never a next step.</h3>
-        <p style="font-size:14px; line-height:1.6; color:var(--graphite);">A benchmark tells you something is wrong. It does not tell you what's driving turnover or where to focus first. Most leaders finish the report and still don't know what to do Monday morning.</p>
+        <p style="font-size:14px; line-height:1.6; color:var(--graphite);">A benchmark tells you something is wrong. It doesn't tell you what's driving turnover or where to focus first. Most leaders finish the report and still don't know what to do Monday morning.</p>
       </div>
     </div>
   </div>
@@ -2431,7 +2431,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
           <div class="condition-pillar">Pillar 01 · Safety</div>
           <div class="condition-name">Fairness &amp; Recognition</div>
           <div class="condition-q">Do your CNAs experience fair decisions and recognition that feels genuine?</div>
-          <div class="condition-when">People stay longer. It is the most predictive signal of retention in your building.</div>
+          <div class="condition-when">People stay longer. It's the most predictive signal of retention in your building.</div>
         </div>
       </div>
       <div class="condition">
@@ -2484,22 +2484,22 @@ textarea.field-input{ resize:vertical; min-height:120px; }
 
     <div class="steps reveal-stagger">
       <div class="step">
-        <div class="step-n">01 / Share the link</div>
+        <div class="step-n">01</div>
         <h3 class="step-title">Share the link</h3>
         <p class="step-body">Send a link to your care team. No app, no login, no corporate email. Works on any phone.</p>
       </div>
       <div class="step">
-        <div class="step-n">02 / Your team responds</div>
+        <div class="step-n">02</div>
         <h3 class="step-title">Your team responds</h3>
-        <p class="step-body">An anonymous 5-minute pulse. Your care staff tells you what they are actually experiencing on the floor.</p>
+        <p class="step-body">An anonymous 5-minute pulse. Your care staff tells you what they're actually experiencing on the floor.</p>
       </div>
       <div class="step">
-        <div class="step-n">03 / See what is driving it</div>
+        <div class="step-n">03</div>
         <h3 class="step-title">See what's driving it</h3>
-        <p class="step-body">Scores across six conditions appear instantly. Your lowest is flagged so you know exactly where to focus.</p>
+        <p class="step-body">Scores across six conditions appear instantly. Your lowest is flagged. For Annual and Diagnostic clients, the brief names a specific move: restructure shift handoffs, adjust DON huddle cadence, rebuild your recognition system.</p>
       </div>
       <div class="step">
-        <div class="step-n">04 / Track what changes</div>
+        <div class="step-n">04</div>
         <h3 class="step-title">Track what changes</h3>
         <p class="step-body">Run the same pulse every quarter. See what's improving, what's stuck, and whether what you're doing is working.</p>
       </div>
@@ -2513,7 +2513,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
     <div class="brief-layout">
       <div>
         <div class="eyebrow">Expert synthesis</div>
-        <h2 class="section-h2" style="margin-bottom:28px;">You do not get a report.<br>You get a <em>starting point.</em></h2>
+        <h2 class="section-h2" style="margin-bottom:28px;">You don't get a report.<br>You get a <em>starting point.</em></h2>
         <p class="section-lede" style="margin-bottom:20px;">
           Every pulse measures the conditions shaping your workplace. What is strong, what is strained, and where to focus next.
         </p>
@@ -2535,8 +2535,8 @@ textarea.field-input{ resize:vertical; min-height:120px; }
         </div>
         <div class="brief-doc-body">
           <div class="brief-block">
-            <div class="brief-label">What is really going on</div>
-            <p class="brief-quote">You don't have a staffing problem. You have a <strong>recognition problem.</strong> Your team is being asked to deliver care through chronic short-staffing, but the system they work inside rarely acknowledges the effort. In a high-pressure environment, quiet quitting is not resistance. It is a rational response.</p>
+            <div class="brief-label">What's really going on</div>
+            <p class="brief-quote">You don't have a staffing problem. You have a <strong>recognition problem.</strong> Your team is being asked to deliver care through chronic short-staffing, but the system they work inside rarely acknowledges the effort. In a high-pressure environment, quiet quitting isn't resistance. It's a rational response.</p>
           </div>
           <div class="brief-block">
             <div class="brief-label">Perception vs. reality</div>
@@ -2544,7 +2544,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
           </div>
           <div class="brief-block">
             <div class="brief-label">Where to start</div>
-            <p class="brief-quote"><strong>Fairness &amp; Recognition is your starting point.</strong> Not because it is easiest to fix, but because it is the most predictive leading indicator of voluntary turnover in your building.</p>
+            <p class="brief-quote"><strong>Fairness &amp; Recognition is your starting point.</strong> Not because it's easiest to fix, but because it's the most predictive leading indicator of voluntary turnover in your building.</p>
           </div>
           <div class="brief-stamp">Sample<br>excerpt</div>
         </div>
@@ -2636,11 +2636,11 @@ textarea.field-input{ resize:vertical; min-height:120px; }
           <span class="price-per">per facility / year</span>
         </div>
         <div class="plan-body">
-          <div class="plan-inc">What is included</div>
+          <div class="plan-inc">What's included</div>
           <ul class="plan-feats">
             <li><span class="feat-check">✓</span> Scores across all six conditions</li>
             <li><span class="feat-check">✓</span> Your care team's actual words, anonymously</li>
-            <li><span class="feat-check">✓</span> Quarter-over-quarter comparison included</li>
+            <li><span class="feat-check">✓</span> Quarter-over-quarter comparison</li>
             <li><span class="feat-check">✓</span> Works on any phone. No login required.</li>
           </ul>
           <div class="plan-commit">For administrators with internal capacity to review the data and act on it themselves.</div>
@@ -2661,7 +2661,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
           <span class="price-per">per facility / year</span>
         </div>
         <div class="plan-body">
-          <div class="plan-inc">What is included</div>
+          <div class="plan-inc">What's included</div>
           <ul class="plan-feats">
             <li><span class="feat-check">✓</span> Everything in Pulse</li>
             <li><span class="feat-check">✓</span> Baseline interviews with 2-3 leaders to ground the year</li>
@@ -2686,7 +2686,7 @@ textarea.field-input{ resize:vertical; min-height:120px; }
           <span class="price-per">one time</span>
         </div>
         <div class="plan-body">
-          <div class="plan-inc">What is included</div>
+          <div class="plan-inc">What's included</div>
           <ul class="plan-feats">
             <li><span class="feat-check">✓</span> Scores across all six conditions</li>
             <li><span class="feat-check">✓</span> Your care team's actual words, anonymously</li>

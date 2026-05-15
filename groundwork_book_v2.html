@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper: #F5F3EE;
+  --paper: #F4F1EA;
   --paper-2: #EDEAE2;
   --paper-3: #E4E0D6;
   --ink: #0A0E1A;
@@ -20,10 +20,10 @@
   --graphite-2: #8A8F9A;
   --rule: #D8D3C6;
 
-  --accent: #C5D93F;
-  --accent-2: #D4E157;
-  --accent-deep: #A8BC2E;
-  --accent-bg: rgba(197,217,63,0.12);
+  --accent: #C4D82E;
+  --accent-2: #D4E85A;
+  --accent-deep: #A8B82A;
+  --accent-bg: rgba(196,216,46,0.12);
 
   --radius-sm: 6px;
   --radius: 10px;
@@ -137,7 +137,7 @@ body::before{
   margin:0 auto;
 }
 
-/* Left side — dark, contextual */
+/* Left side - dark, contextual */
 .book-left{
   background:var(--ink);
   color:var(--paper);
@@ -154,7 +154,7 @@ body::before{
   position:absolute;
   top:-20%; right:-20%;
   width:80%; height:80%;
-  background:radial-gradient(circle at center, rgba(197,217,63,0.08) 0%, transparent 60%);
+  background:radial-gradient(circle at center, rgba(196,216,46,0.08) 0%, transparent 60%);
   filter:blur(40px);
   pointer-events:none;
 }
@@ -234,7 +234,7 @@ body::before{
   width:16px;
   height:16px;
   margin-top:3px;
-  background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3e%3cpath d='M3 8.5L6.5 12L13 4.5' stroke='%23C5D93F' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+  background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3e%3cpath d='M3 8.5L6.5 12L13 4.5' stroke='%23C4D82E' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
   background-repeat:no-repeat;
   background-position:center;
   flex-shrink:0;
@@ -270,7 +270,7 @@ body::before{
 }
 .book-left-footer-email:hover{ color:var(--accent); }
 
-/* Right side — light, form */
+/* Right side - light, form */
 .book-right{
   background:var(--paper);
   padding:80px 60px 60px;
@@ -290,7 +290,7 @@ body::before{
   line-height:1.55;
 }
 
-/* ===== CONTACT FORM — light theme ===== */
+/* ===== CONTACT FORM - light theme ===== */
 .book-form{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -425,7 +425,7 @@ body::before{
   align-items:center;
   justify-content:center;
   color:var(--ink);
-  box-shadow:0 4px 20px rgba(197,217,63,0.35);
+  box-shadow:0 4px 20px rgba(196,216,46,0.35);
 }
 .form-thankyou-icon svg{
   width:32px; height:32px;
@@ -513,12 +513,12 @@ body::before{
 <!-- ========== BOOK LAYOUT ========== -->
 <div class="book-layout">
 
-  <!-- Left side — dark, contextual -->
+  <!-- Left side - dark, contextual -->
   <div class="book-left">
     <div class="book-left-inner">
       <div class="book-eyebrow">Get in touch</div>
-      <h1 class="book-h1">Let's find a time <em>to talk.</em></h1>
-      <p class="book-sub">We'd love to show you how Groundwork can support your team.</p>
+      <h1 class="book-h1">See what's actually<br>shaping <em>your team.</em></h1>
+      <p class="book-sub">Thirty minutes. We'll walk you through the framework, show you the live platform, and decide together if it's a fit.</p>
     </div>
 
     <div class="book-left-footer">
@@ -527,7 +527,7 @@ body::before{
     </div>
   </div>
 
-  <!-- Right side — form -->
+  <!-- Right side - form -->
   <div class="book-right">
     <div class="book-right-inner">
       <p class="book-form-intro">Fill out the form below. We'll be in touch within one business day to schedule a time that works for you.</p>
